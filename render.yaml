@@ -2,6 +2,7 @@ services:
   - type: web
     name: turfex-backend
     env: python
+    plan: free
     buildCommand: "cd backend && pip install -r requirements.txt"
     startCommand: "cd backend && uvicorn server:app --host 0.0.0.0 --port $PORT"
     envVars:
