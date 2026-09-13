@@ -10,7 +10,7 @@
  * Affiche le code en gros, avec bouton "Copier" et "Aller au site"
  * qui pré-remplit le code dans le sessionStorage utilisé par PasswordGate.
  */
-import { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,7 @@ const API = `${BACKEND_URL}/api`;
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLLS = 120; // ~6 minutes max
 
-const PaymentSuccess = () => {
+const PaymentSuccessContent = () => {
   const router = useRouter();
   const params = useSearchParams();
   const [status, setStatus] = useState("polling");
@@ -275,5 +275,11 @@ const PaymentSuccess = () => {
   );
 };
 
-export default PaymentSuccess;
+export default function PaymentSuccess() {
+  return (
+    <React.Suspense fallback={<div className="min-h-screen bg-black" />}>
+      <PaymentSuccessContent />
+    </React.Suspense>
+  );
+}
 

@@ -103,7 +103,12 @@ const isoLocalToUtc = (localStr) => {
 };
 
 const Admin = () => {
-  const [token, setToken] = useState(() => sessionStorage.getItem(ADMIN_KEY) || "");
+  const [token, setToken] = useState(() => {
+    if (typeof window !== "undefined") {
+      return sessionStorage.getItem(ADMIN_KEY) || "";
+    }
+    return "";
+  });
   const [pwd, setPwd] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
