@@ -4381,7 +4381,12 @@ async def _odds_seed_on_startup():
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
-    allow_origins=["*"],
+    allow_origins=[
+        "http://localhost:3000",
+        "https://frontend-bk9lodoar-wague.vercel.app", 
+        "https://turfex-e7elsevyi-wague.vercel.app"
+    ],
+    allow_origin_regex="https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
