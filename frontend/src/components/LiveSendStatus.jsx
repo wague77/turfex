@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 export default function LiveSendStatus({ token }) {

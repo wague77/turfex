@@ -14,7 +14,7 @@ import { MaketouSubscriptionWidget } from "@/components/MaketouSubscriptionWidge
 import { TrialSignup } from "@/components/TrialSignup";
 import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const STORAGE_KEY = "wague-pmu-auth";
 

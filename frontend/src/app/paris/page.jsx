@@ -11,7 +11,7 @@ import { ArrowLeft, Plus, Trash2, RefreshCw, Check, X, Wallet, TrendingUp, Trend
 import { toast } from "sonner";
 import { APP_NAME } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const PARI_TYPES = [

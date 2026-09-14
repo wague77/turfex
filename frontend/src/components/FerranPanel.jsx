@@ -38,7 +38,7 @@ import {
   UsersThree,
 } from "@phosphor-icons/react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const ferranClient = axios.create({ baseURL: API, timeout: 30000 });
 

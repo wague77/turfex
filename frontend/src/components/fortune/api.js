@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 export const FORTUNE_API = `${BACKEND_URL}/api/fortune`;
 
 export const ddmmyyyy = (d) => {

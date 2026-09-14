@@ -8,7 +8,7 @@ import { ArrowLeft, RefreshCw, TrendingUp, Target, Trophy } from "lucide-react";
 import { toast } from "sonner";
 import { APP_NAME } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const Stats = () => {

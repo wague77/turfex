@@ -46,7 +46,7 @@ import ChariowConfigPanel from "@/components/ChariowConfigPanel";
 import SourceExportPanel from "@/components/SourceExportPanel";
 import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const ADMIN_KEY = "wague-pmu-admin-token";
 

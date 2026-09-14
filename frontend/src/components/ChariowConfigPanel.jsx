@@ -14,7 +14,7 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Save, RefreshCw, ExternalLink, Tag, Trash2 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const PLAN_META = {

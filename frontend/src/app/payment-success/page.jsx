@@ -19,7 +19,7 @@ import { toast } from "sonner";
 const LOGO_SRC = "/logo.svg";
 import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const POLL_INTERVAL_MS = 3000;
 const MAX_POLLS = 120; // ~6 minutes max

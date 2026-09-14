@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const POLL_INTERVAL_MS = 60_000; // 60 secondes
 const STORAGE_KEY = "wague-pmu-auth";

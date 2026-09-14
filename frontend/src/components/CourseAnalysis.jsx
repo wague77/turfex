@@ -5,7 +5,7 @@ import axios from "axios";
 import { analyzeHorse, computeCourseDifficulty, computeStables } from "@/lib/analytics";
 import { Cloud, CloudRain, CloudSnow, Sun, Wind, Droplets, Thermometer, Users, Flag, AlertTriangle, Trophy } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const WeatherIcon = ({ code, size = "h-6 w-6" }) => {

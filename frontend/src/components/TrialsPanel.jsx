@@ -22,7 +22,7 @@ import {
 import { Input } from "@/components/ui/input";
 import LiveSendStatus from "@/components/LiveSendStatus";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const trialStatus = (t, today) => {

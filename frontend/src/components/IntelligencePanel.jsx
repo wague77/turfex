@@ -12,7 +12,7 @@ import { HeroIntelligence } from "@/components/HeroIntelligence";
 import { DashboardIntelligence } from "@/components/DashboardIntelligence";
 import { scoreParticipants } from "@/lib/pronostics-source";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const DEFAULT_DATE = "25032025";

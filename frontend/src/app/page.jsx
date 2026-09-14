@@ -38,7 +38,7 @@ import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 // Logo importé via public/ pour Next.js
 const LOGO_SRC = "/logo.svg";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 const NB_CLASSES = 20;
 const emptyCourse = () => ({ allocation: 0, valeur: 0, place: 0, partants: 0 });

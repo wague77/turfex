@@ -19,7 +19,7 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { CreditCard, Save, Send, RefreshCw, Eye, EyeOff, ExternalLink, CheckCircle2, XCircle } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
 const API = `${BACKEND_URL}/api`;
 
 const PLAN_LABELS = {
