@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const BACKEND_URL =
   process.env.NEXT_PUBLIC_BACKEND_URL ||
-  "https://turfex-backend-production.up.railway.app";
+  "http://localhost:8000";
 
 const nextConfig = {
   // Permet de servir les images depuis Unsplash et autres domaines externes
