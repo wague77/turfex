@@ -103,7 +103,12 @@ const isoLocalToUtc = (localStr) => {
 };
 
 const Admin = () => {
-  const [token, setToken] = useState("free-admin");
+  const [token, setToken] = useState("");
+  
+  useEffect(() => {
+    const saved = sessionStorage.getItem(ADMIN_KEY);
+    if (saved) setToken(saved);
+  }, []);
   const [pwd, setPwd] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -316,6 +321,61 @@ const Admin = () => {
     expired: items.filter((it) => it.expired).length,
     inactive: items.filter((it) => !it.active).length,
   };
+
+  if (!token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+        <form onSubmit={handleLogin} className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
+          <div className="flex flex-col items-center mb-6">
+            <img src={LOGO_SRC} alt="Logo" className="h-16 w-16 mb-2" />
+            <h2 className="text-xl font-black italic text-center">
+              <span className="bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 bg-clip-text text-transparent" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
+                {APP_NAME}
+              </span>
+              <br />
+              <span className="text-gray-800 text-sm font-sans font-bold">Administration</span>
+            </h2>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="pwd">Mot de passe Administrateur</Label>
+              <Input
+                id="pwd"
+                type="password"
+                value={pwd}
+                onChange={(e) => setPwd(e.target.value)}
+                disabled={loginLoading || loginLockout.seconds > 0}
+                required
+              />
+            </div>
+            {loginError && (
+              <div className="text-red-600 text-sm font-semibold bg-red-50 p-2 rounded border border-red-200">
+                {loginError}
+                {loginRemaining !== null && loginRemaining > 0 && (
+                  <div className="text-xs text-red-500 font-normal">
+                    {loginRemaining} tentative(s) restante(s)
+                  </div>
+                )}
+              </div>
+            )}
+            <Button
+              type="submit"
+              className="w-full bg-black hover:bg-gray-800"
+              disabled={loginLoading || loginLockout.seconds > 0}
+            >
+              {loginLockout.seconds > 0 ? (
+                `Bloqué (${formatDuration(loginLockout.seconds)})`
+              ) : loginLoading ? (
+                "Vérification..."
+              ) : (
+                "Connexion"
+              )}
+            </Button>
+          </div>
+        </form>
+      </div>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-background py-6 px-4">
