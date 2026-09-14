@@ -947,6 +947,13 @@ async def admin_login(req: AdminLoginRequest, request: Request):
     return {"ok": True, "adminToken": req.password}
 
 
+@api_router.post("/admin/reset-default-password")
+async def reset_default_password():
+    """Réinitialise le mot de passe admin à sa valeur par défaut wague-admin-2026"""
+    await db.admin_config.delete_one({"key": "admin_password"})
+    return {"ok": True, "message": "Mot de passe réinitialisé par défaut."}
+
+
 class ChangeAdminPasswordRequest(BaseModel):
     currentPassword: str
     newPassword: str

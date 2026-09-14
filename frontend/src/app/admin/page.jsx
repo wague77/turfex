@@ -323,8 +323,29 @@ const Admin = () => {
   if (!token) {
     const isLocked = loginLockout.seconds > 0;
     const showWarning = loginRemaining != null && loginRemaining > 0 && loginRemaining <= 2;
+
+    const handleResetPassword = async () => {
+      if (!window.confirm("Attention : Voulez-vous vraiment réinitialiser le mot de passe admin par défaut (wague-admin-2026) ?")) return;
+      try {
+        await axios.post(`${API}/admin/reset-default-password`);
+        toast.success("Mot de passe réinitialisé !", { description: "Le mot de passe est redevenu 'wague-admin-2026'." });
+      } catch (err) {
+        toast.error("Erreur lors de la réinitialisation");
+      }
+    };
+
     return (
-      <main className="min-h-screen bg-background flex items-center justify-center px-4">
+      <main className="min-h-screen bg-background flex items-center justify-center px-4 relative">
+        {/* Bouton de réinitialisation caché subtilement ou positionné en bas */}
+        <Button
+          onClick={handleResetPassword}
+          variant="outline"
+          size="sm"
+          className="absolute bottom-4 right-4 text-xs opacity-50 hover:opacity-100 bg-white border-2 border-black"
+        >
+          <RefreshCw className="h-3 w-3 mr-1" />
+          Réinitialiser le mot de passe
+        </Button>
         <form
           onSubmit={handleLogin}
           className="w-full max-w-sm bg-card border-2 border-black rounded-lg p-6 space-y-4 shadow-lg"
