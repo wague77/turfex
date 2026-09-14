@@ -115,8 +115,18 @@ def _is_bcrypt_hash(stored: str) -> bool:
 
 
 async def verify_admin_password(plain: str) -> bool:
-    """Accès libre à l'administration sans mot de passe."""
-    return True
+    if not plain:
+        return False
+    stored = await get_current_admin_password()
+    if not stored:
+        return False
+    if _is_bcrypt_hash(stored):
+        try:
+            return bcrypt.checkpw(plain.encode("utf-8"), stored.encode("utf-8"))
+        except Exception:
+            return False
+    # Fallback comparison
+    return secrets.compare_digest(plain, stored)
 
 
 
@@ -216,7 +226,7 @@ class RateLimiter:
 
 
 user_limiter = RateLimiter(window_seconds=300, max_attempts=6, lockouts=[600, 1200, 3600, 86400])
-admin_limiter = RateLimiter(window_seconds=300, max_attempts=4, lockouts=[900, 1800, 7200, 86400])
+admin_limiter = RateLimiter(window_seconds=300, max_attempts=3, lockouts=[900, 1800, 7200, 86400])
 trial_limiter = RateLimiter(window_seconds=3600, max_attempts=5, lockouts=[3600, 7200, 86400])  # 5/h par IP, lockout 1h
 
 
@@ -296,7 +306,11 @@ async def punish(limiter: RateLimiter, ip: str, base_status: int, base_msg: str,
 
 
 async def require_admin(x_admin_password: Optional[str] = None):
-    """Accès libre admin sans mot de passe."""
+    """Vérifie le token de session ou le mot de passe admin."""
+    if not x_admin_password:
+        raise HTTPException(status_code=401, detail="Non autorisé (mot de passe manquant)")
+    if not await verify_admin_password(x_admin_password):
+        raise HTTPException(status_code=401, detail="Non autorisé (mot de passe incorrect)")
     return True
 
 # Simple in-memory TTL cache
@@ -917,7 +931,14 @@ class AdminLoginRequest(BaseModel):
 
 @api_router.post("/admin/login")
 async def admin_login(req: AdminLoginRequest, request: Request):
-    return {"ok": True, "adminToken": req.password or "free-admin"}
+    ip = get_client_ip(request)
+    await enforce_rate_limit(admin_limiter, ip, "admin")
+    
+    if not await verify_admin_password(req.password):
+        await punish(admin_limiter, ip, 401, "Mot de passe incorrect", "admin")
+        
+    await admin_limiter.record_success(ip)
+    return {"ok": True, "adminToken": req.password}
 
 
 @api_router.post("/admin/reset-default-password")
