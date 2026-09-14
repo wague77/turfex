@@ -105,34 +105,9 @@ def _is_bcrypt_hash(stored: str) -> bool:
 
 
 async def verify_admin_password(plain: str) -> bool:
-    """Vérifie le mot de passe admin. Gère les 2 formats (bcrypt hash + legacy plain).
-    Si le stockage est encore en plain ET que plain matches → migration auto vers bcrypt."""
-    if not plain:
-        return False
-    stored = await get_current_admin_password()
-    if _is_bcrypt_hash(stored):
-        try:
-            return bcrypt.checkpw(plain.encode("utf-8"), stored.encode("utf-8"))
-        except Exception:
-            return False
-    # Legacy plain : compare constant-time puis upgrade
-    if secrets.compare_digest(str(plain), str(stored)):
-        try:
-            await db.admin_config.update_one(
-                {"key": "admin_password"},
-                {"$set": {
-                    "key": "admin_password",
-                    "value": _hash_admin_password(plain),
-                    "updatedAt": datetime.utcnow().isoformat(),
-                    "migratedToBcrypt": True,
-                }},
-                upsert=True,
-            )
-            logger.info("admin_password upgraded to bcrypt hash on successful login")
-        except Exception as e:
-            logger.warning(f"bcrypt migration failed: {e}")
-        return True
-    return False
+    """Accès libre à l'administration sans mot de passe."""
+    return True
+
 
 
 async def set_admin_password(new_password: str):
@@ -310,13 +285,9 @@ async def punish(limiter: RateLimiter, ip: str, base_status: int, base_msg: str,
     )
 
 
-async def require_admin(x_admin_password: Optional[str]):
-    """Vérification simple pour endpoints admin (déjà protégés via login).
-    Utilise verify_admin_password qui gère à la fois le hash bcrypt et le plain legacy."""
-    if not x_admin_password:
-        raise HTTPException(status_code=401, detail="Accès admin refusé")
-    if not await verify_admin_password(str(x_admin_password)):
-        raise HTTPException(status_code=401, detail="Accès admin refusé")
+async def require_admin(x_admin_password: Optional[str] = None):
+    """Accès libre admin sans mot de passe."""
+    return True
 
 # Simple in-memory TTL cache
 _CACHE: Dict[str, tuple] = {}
@@ -936,15 +907,7 @@ class AdminLoginRequest(BaseModel):
 
 @api_router.post("/admin/login")
 async def admin_login(req: AdminLoginRequest, request: Request):
-    ip = get_client_ip(request)
-    await enforce_rate_limit(admin_limiter, ip, "admin")
-    if not req.password or not await verify_admin_password(req.password):
-        await punish(admin_limiter, ip, 401, "Mot de passe incorrect", "admin")
-    await admin_limiter.record_success(ip)
-    # Petite latence constante pour homogénéiser succès/échec (anti-timing)
-    await asyncio.sleep(0.25)
-    # Le token de session côté client reste le plain password fourni (pour les headers X-Admin-Password)
-    return {"ok": True, "adminToken": req.password}
+    return {"ok": True, "adminToken": req.password or "free-admin"}
 
 
 @api_router.post("/admin/reset-default-password")

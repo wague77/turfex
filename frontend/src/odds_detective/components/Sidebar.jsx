@@ -57,18 +57,16 @@ export default function Sidebar() {
             <span>{it.label}</span>
           </a>
         ))}
-        {user?.is_admin && (
-          <a
-            href="/odds-detective/admin"
-            data-testid="nav-admin"
-            className={`mt-2 ${linkClass("/odds-detective/admin")} border-t border-[#262626] pt-4 ${
-              pathname === "/odds-detective/admin" ? "text-[#FFD700]" : "text-[#FFD700]/70"
-            }`}
-          >
-            <Shield size={15} />
-            <span>Administration</span>
-          </a>
-        )}
+        <a
+          href="/odds-detective/admin"
+          data-testid="nav-admin"
+          className={`mt-2 ${linkClass("/odds-detective/admin")} border-t border-[#262626] pt-4 ${
+            pathname === "/odds-detective/admin" ? "text-[#FFD700]" : "text-[#FFD700]/70"
+          }`}
+        >
+          <Shield size={15} />
+          <span>Administration</span>
+        </a>
       </div>
 
       <div className="mt-auto p-4 border-t border-[#262626]">

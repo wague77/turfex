@@ -21,10 +21,8 @@ export default function Admin() {
   const [showAdminCode, setShowAdminCode] = useState(false);
   const [savingCode, setSavingCode] = useState(false);
 
-  const load = () => api.get("/admin/users").then((r) => setUsers(r.data));
-  useEffect(() => { if (user?.is_admin) load(); }, [user]);
-
-  if (!user?.is_admin) return /* Navigate to /odds-detective/tendance - use useEffect redirect */;
+  const load = () => api.get("/admin/users").then((r) => setUsers(r.data)).catch(() => {});
+  useEffect(() => { load(); }, []);
 
   const create = async () => {
     if (!username.trim()) { toast.error("Username requis"); return; }

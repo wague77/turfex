@@ -102,12 +102,7 @@ const isoLocalToUtc = (localStr) => {
 };
 
 const Admin = () => {
-  const [token, setToken] = useState(() => {
-    if (typeof window !== "undefined") {
-      return sessionStorage.getItem(ADMIN_KEY) || "";
-    }
-    return "";
-  });
+  const [token, setToken] = useState("free-admin");
   const [pwd, setPwd] = useState("");
   const [loginLoading, setLoginLoading] = useState(false);
   const [loginError, setLoginError] = useState("");
@@ -161,24 +156,16 @@ const Admin = () => {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem(ADMIN_KEY);
-    setToken("");
-    setItems([]);
+    window.location.href = "/";
   };
 
   const loadCodes = async () => {
-    if (!token) return;
     setLoading(true);
     try {
       const resp = await axios.get(`${API}/admin/codes`, authHeaders());
       setItems(resp.data?.items || []);
     } catch (err) {
-      if (err?.response?.status === 401) {
-        toast.error("Session admin expirée");
-        handleLogout();
-      } else {
-        toast.error("Erreur de chargement");
-      }
+      toast.error("Erreur de chargement");
     } finally {
       setLoading(false);
     }
@@ -318,108 +305,7 @@ const Admin = () => {
     }
   };
 
-  // ---- Vue Login ----
-  if (!token) {
-    const isLocked = loginLockout.seconds > 0;
-    const showWarning = loginRemaining != null && loginRemaining > 0 && loginRemaining <= 2;
 
-    const handleResetPassword = async () => {
-      if (!window.confirm("Attention : Voulez-vous vraiment réinitialiser le mot de passe admin par défaut (wague-admin-2026) ?")) return;
-      try {
-        await axios.post(`${API}/admin/reset-default-password`);
-        toast.success("Mot de passe réinitialisé !", { description: "Le mot de passe est redevenu 'wague-admin-2026'." });
-      } catch (err) {
-        toast.error("Erreur lors de la réinitialisation");
-      }
-    };
-
-    return (
-      <main className="min-h-screen bg-background flex items-center justify-center px-4 relative">
-        {/* Bouton de réinitialisation caché subtilement ou positionné en bas */}
-        <Button
-          onClick={handleResetPassword}
-          variant="outline"
-          size="sm"
-          className="absolute bottom-4 right-4 text-xs opacity-50 hover:opacity-100 bg-white border-2 border-black"
-        >
-          <RefreshCw className="h-3 w-3 mr-1" />
-          Réinitialiser le mot de passe
-        </Button>
-        <form
-          onSubmit={handleLogin}
-          className="w-full max-w-sm bg-card border-2 border-black rounded-lg p-6 space-y-4 shadow-lg"
-        >
-          <div className="flex flex-col items-center gap-2">
-            <img src={LOGO_SRC} alt={`${APP_NAME} logo`} className="h-16 w-16 object-contain" />
-            <div className="text-center">
-              <h1 className="text-2xl font-black italic bg-gradient-to-r from-pink-500 via-yellow-400 to-cyan-400 bg-clip-text text-transparent" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
-                {APP_NAME}
-              </h1>
-              <p className="text-[10px] font-bold tracking-[0.3em] text-muted-foreground">
-                {APP_TAGLINE}
-              </p>
-            </div>
-            <h2 className="text-base font-bold flex items-center gap-2 mt-1">
-              <ShieldCheck className="h-4 w-4 text-row-pink" />
-              Espace administrateur
-            </h2>
-            <p className="text-xs text-muted-foreground">Mot de passe admin requis</p>
-          </div>
-          <Input
-            type="password"
-            value={pwd}
-            onChange={(e) => setPwd(e.target.value)}
-            placeholder="Mot de passe administrateur"
-            autoFocus
-            disabled={isLocked || loginLoading}
-            data-testid="admin-login-password-input"
-          />
-
-          {isLocked && (
-            <div className="text-sm bg-red-100 border-2 border-red-400 text-red-800 rounded px-3 py-2 flex items-center gap-2">
-              <Lock className="h-4 w-4 shrink-0" />
-              <div className="flex-1">
-                <div className="font-bold">Trop de tentatives admin</div>
-                <div className="text-xs">
-                  Verrouillé pour <span className="font-mono font-bold">{formatDuration(loginLockout.seconds)}</span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {!isLocked && loginError && (
-            <div className="text-sm bg-destructive/10 border border-destructive/30 text-destructive rounded px-3 py-2">
-              <div className="flex items-center gap-2">
-                <AlertTriangle className="h-4 w-4 shrink-0" />
-                <span className="flex-1">{loginError}</span>
-              </div>
-              {showWarning && (
-                <div className="text-xs mt-1 ml-6 font-bold">
-                  ⚠ Plus que <span className="font-mono">{loginRemaining}</span> tentative{loginRemaining > 1 ? "s" : ""} avant verrouillage admin
-                </div>
-              )}
-            </div>
-          )}
-
-          <Button
-            type="submit"
-            className="w-full bg-row-pink hover:bg-row-pink/90 text-white font-bold disabled:opacity-50"
-            disabled={loginLoading || isLocked || !pwd}
-            data-testid="admin-login-submit-btn"
-          >
-            {loginLoading
-              ? "Vérification..."
-              : isLocked
-              ? `Verrouillé (${formatDuration(loginLockout.seconds)})`
-              : "Connexion"}
-          </Button>
-          <a href="/" className="block text-center text-xs underline text-muted-foreground hover:text-foreground">
-            <ArrowLeft className="inline h-3 w-3 mr-1" /> Retour à l'accueil
-          </a>
-        </form>
-      </main>
-    );
-  }
 
   // ---- Vue Dashboard ----
   const stats = {
@@ -463,15 +349,11 @@ const Admin = () => {
         <Button onClick={loadCodes} variant="outline" className="bg-white border-2 border-black" disabled={loading}>
           <RefreshCw className={`h-4 w-4 mr-1 ${loading ? "animate-spin" : ""}`} /> Rafraîchir
         </Button>
-        <ChangePasswordDialog
-          token={token}
-          onPasswordChanged={(newToken) => {
-            setToken(newToken);
-            setNotifRefreshKey((k) => k + 1);
-          }}
-        />
+        <span className="px-3 py-1.5 bg-green-400 text-green-950 font-black text-xs rounded-full border-2 border-black uppercase tracking-wider">
+          🔓 Accès Libre
+        </span>
         <Button onClick={handleLogout} variant="outline" className="bg-white border-2 border-black" data-testid="admin-logout-btn">
-          Déconnexion
+          Retour au site
         </Button>
       </header>
 
