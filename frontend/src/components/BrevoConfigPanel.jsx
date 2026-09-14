@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 /**
  * BrevoConfigPanel — gestion clé Brevo + sender + test + provider switcher.
@@ -321,12 +321,12 @@ export default function BrevoConfigPanel({ token }) {
         <div className="flex-1 min-w-[200px]">
           <div className="font-bold text-sm">
             Clé Brevo : {hasKey ? (
-              <span className="font-mono">{keyStatus.activeKeyMasked}</span>
+              <span className="font-mono">{keyStatus?.activeKeyMasked}</span>
             ) : (
               <span className="text-red-700">absente</span>
             )}
           </div>
-          {keyStatus.dbKeyUpdatedAt && (
+          {keyStatus?.dbKeyUpdatedAt && (
             <div className="text-[11px] text-gray-600 mt-0.5">
               MAJ : {new Date(keyStatus.dbKeyUpdatedAt).toLocaleString("fr-FR")} (source : {keyStatus.activeSource})
             </div>
@@ -341,7 +341,7 @@ export default function BrevoConfigPanel({ token }) {
         {account?.email && (
           <div className="text-[11px] text-gray-600">Compte : <span className="font-mono">{account.email}</span></div>
         )}
-        {keyStatus.dbKeyPresent && (
+        {keyStatus?.dbKeyPresent && (
           <Button
             onClick={handleRemoveKey}
             disabled={saving}

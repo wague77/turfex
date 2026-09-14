@@ -4366,7 +4366,7 @@ app.add_middleware(
         "https://frontend-bk9lodoar-wague.vercel.app", 
         "https://turfex-e7elsevyi-wague.vercel.app"
     ],
-    allow_origin_regex="https://.*\.vercel\.app",
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
