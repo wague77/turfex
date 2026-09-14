@@ -20,15 +20,21 @@ const defaultSettings = {
 };
 
 export const SettingsProvider = ({ children }) => {
-  const [settings, setSettings] = useState(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored) return { ...defaultSettings, ...JSON.parse(stored) };
-    } catch (_) {}
-    return defaultSettings;
-  });
+  const [settings, setSettings] = useState(defaultSettings);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      if (stored) {
+        setSettings({ ...defaultSettings, ...JSON.parse(stored) });
+      }
+    } catch (_) {}
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
     } catch (_) {}
@@ -37,7 +43,7 @@ export const SettingsProvider = ({ children }) => {
     } else {
       document.documentElement.classList.remove("dark");
     }
-  }, [settings]);
+  }, [settings, isLoaded]);
 
   const update = (patch) => setSettings((s) => ({ ...s, ...patch }));
   const reset = () => setSettings(defaultSettings);

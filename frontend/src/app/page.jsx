@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useRef, useState, useEffect } from "react";
 import axios from "axios";
@@ -72,19 +72,20 @@ const Index = () => {
   }, [currentCourse?.hippodrome, scraperCtx?.date]);
 
   // Récupère les infos d'auth utilisateur (depuis sessionStorage)
-  const userInfo = (() => {
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
     try {
       const data = JSON.parse(sessionStorage.getItem("wague-pmu-auth") || "{}");
-      if (!data?.code) return null;
-      return {
-        code: data.code,
-        expiresAt: data.expiresAt || null,
-        label: data.label || null,
-      };
-    } catch (_) {
-      return null;
-    }
-  })();
+      if (data?.code) {
+        setUserInfo({
+          code: data.code,
+          expiresAt: data.expiresAt || null,
+          label: data.label || null,
+        });
+      }
+    } catch (_) {}
+  }, []);
 
   const userExpiry = userInfo?.expiresAt || null;
 
