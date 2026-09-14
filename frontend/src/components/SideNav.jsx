@@ -199,7 +199,7 @@ const NavList = ({ value, onValueChange, horsesCount, onItemClick, userInfo, onL
         return (
           <Link
             key={link.to}
-            to={link.to}
+            href={link.to}
             onClick={onItemClick}
             className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-bold text-white/90 hover:bg-white/10 transition-all"
             data-testid={`side-nav-link-${link.to.replace("/", "")}`}
