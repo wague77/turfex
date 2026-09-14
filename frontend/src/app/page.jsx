@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useState, useEffect } from "react";
-import Link from "next/link";
 import axios from "axios";
 import { ClasseTable } from "@/components/ClasseTable";
 import { ClassementTable } from "@/components/ClassementTable";
@@ -234,11 +233,11 @@ const Index = () => {
               </div>
             }
             historyBtn={
-              <Link href="/historique">
+              <a href="/historique">
                 <Button variant="outline" size="icon" className="bg-white border-2 border-black hover:bg-yellow-200" title="Historique">
                   <History className="h-4 w-4" />
                 </Button>
-              </Link>
+              </a>
             }
             exportBtn={
               <>

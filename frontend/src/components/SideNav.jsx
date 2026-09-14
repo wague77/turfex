@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import {
   Zap,
   Sparkles,
@@ -197,7 +196,7 @@ const NavList = ({ value, onValueChange, horsesCount, onItemClick, userInfo, onL
       {EXTERNAL_LINKS.map((link) => {
         const Icon = link.icon;
         return (
-          <Link
+          <a
             key={link.to}
             href={link.to}
             onClick={onItemClick}
@@ -206,7 +205,7 @@ const NavList = ({ value, onValueChange, horsesCount, onItemClick, userInfo, onL
           >
             <Icon className="h-4 w-4 shrink-0" />
             <span className="flex-1 text-left">{link.label}</span>
-          </Link>
+          </a>
         );
       })}
     </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useOddsAuth } from "@/odds_detective/context/AuthContext";
 import {
@@ -48,7 +47,7 @@ export default function Sidebar() {
           <span>Démarrer</span>
         </button>
         {items.map((it) => (
-          <Link
+          <a
             key={it.to}
             href={it.to}
             data-testid={it.testid}
@@ -56,10 +55,10 @@ export default function Sidebar() {
           >
             <it.icon size={15} />
             <span>{it.label}</span>
-          </Link>
+          </a>
         ))}
         {user?.is_admin && (
-          <Link
+          <a
             href="/odds-detective/admin"
             data-testid="nav-admin"
             className={`mt-2 ${linkClass("/odds-detective/admin")} border-t border-[#262626] pt-4 ${
@@ -68,7 +67,7 @@ export default function Sidebar() {
           >
             <Shield size={15} />
             <span>Administration</span>
-          </Link>
+          </a>
         )}
       </div>
 

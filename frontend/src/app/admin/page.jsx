@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -414,9 +413,9 @@ const Admin = () => {
               ? `Verrouillé (${formatDuration(loginLockout.seconds)})`
               : "Connexion"}
           </Button>
-          <Link href="/" className="block text-center text-xs underline text-muted-foreground hover:text-foreground">
+          <a href="/" className="block text-center text-xs underline text-muted-foreground hover:text-foreground">
             <ArrowLeft className="inline h-3 w-3 mr-1" /> Retour à l'accueil
-          </Link>
+          </a>
         </form>
       </main>
     );
@@ -447,11 +446,11 @@ const Admin = () => {
             <span className="font-bold tracking-widest">{APP_TAGLINE}</span> • Gestion des codes d'accès
           </p>
         </div>
-        <Link href="/">
+        <a href="/">
           <Button variant="outline" className="bg-white border-2 border-black">
             <ArrowLeft className="h-4 w-4 mr-1" /> Accueil
           </Button>
-        </Link>
+        </a>
         <Button
           onClick={handleDownloadAll}
           variant="outline"

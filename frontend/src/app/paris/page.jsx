@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -142,11 +141,11 @@ const Paris = () => {
   return (
     <main className="min-h-screen bg-background py-6 px-4">
       <header className="max-w-6xl mx-auto mb-6 flex flex-wrap items-center gap-3">
-        <Link href="/">
+        <a href="/">
           <Button variant="outline" className="bg-white border-2 border-black">
             <ArrowLeft className="h-4 w-4 mr-1" /> Retour
           </Button>
-        </Link>
+        </a>
         <h1 className="text-2xl font-extrabold italic flex-1">
           <span className="bg-gradient-to-r from-pink-500 to-cyan-500 bg-clip-text text-transparent" style={{ fontFamily: "Impact, 'Arial Black', sans-serif" }}>
             {APP_NAME}

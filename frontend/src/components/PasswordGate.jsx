@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ShieldCheck, Settings as SettingsIcon, AlertTriangle, Lock, Sparkles, ShoppingCart } from "lucide-react";
@@ -228,13 +227,13 @@ export const PasswordGate = ({ children }) => {
             : "Entrer"}
         </Button>
 
-        <Link
+        <a
           href="/admin"
           className="block text-center text-xs text-muted-foreground hover:text-foreground underline transition-colors"
         >
           <SettingsIcon className="inline h-3 w-3 mr-1" />
           Espace administrateur
-        </Link>
+        </a>
 
         {/* === Section achat de code === */}
         <div className="border-t-2 border-dashed pt-4 mt-2">
