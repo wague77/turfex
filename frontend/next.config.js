@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
+const BACKEND_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL ||
+  "https://turfex-backend-production.up.railway.app";
+
 const nextConfig = {
   // Permet de servir les images depuis Unsplash et autres domaines externes
   images: {
@@ -9,10 +13,17 @@ const nextConfig = {
       },
     ],
   },
-  // Alias @ → src/ (complémentaire au jsconfig.json)
-  experimental: {
-    // Activer les Server Actions si besoin dans le futur
+  // Proxy : toutes les requêtes /api/* sont redirigées vers le backend Railway
+  // → élimine les problèmes CORS et les erreurs Network Error sur Vercel
+  async rewrites() {
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${BACKEND_URL}/api/:path*`,
+      },
+    ];
   },
+  experimental: {},
 };
 
 module.exports = nextConfig;

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * FerranPanel — mini-app PMU Turf Analytics intégrée comme onglet TURFEX.
@@ -38,8 +38,8 @@ import {
   UsersThree,
 } from "@phosphor-icons/react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 const ferranClient = axios.create({ baseURL: API, timeout: 30000 });
 
 const todayISO = () => new Date().toISOString().slice(0, 10);

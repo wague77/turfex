@@ -1,12 +1,12 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { Trophy, Clock, RefreshCw, ChevronDown, ChevronUp, Hourglass } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const ARRIVEE_COLORS = [
   "bg-yellow-300 text-black border-yellow-700",

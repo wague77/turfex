@@ -45,9 +45,10 @@ import ChariowConfigPanel from "@/components/ChariowConfigPanel";
 import SourceExportPanel from "@/components/SourceExportPanel";
 import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Utilise le proxy Next.js (rewrites dans next.config.js) → pas de CORS, fonctionne partout
+const API = "/api";
 const ADMIN_KEY = "wague-pmu-admin-token";
+
 
 const formatDate = (iso) => {
   if (!iso) return "—";

@@ -1,4 +1,4 @@
-
+﻿
 /**
  * Odds Detective — API helper.
  * Pointe vers `/api/odds/*` (router séparé du backend TURFEX).
@@ -6,8 +6,7 @@
  */
 import axios from "axios";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-export const API = `${BACKEND_URL}/api/odds`;
+export const API = "/api/odds";
 
 export const api = axios.create({ baseURL: API });
 

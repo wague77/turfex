@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * ResendDomainsPanel — gestion des domaines Resend depuis l'admin TURFEX.
@@ -30,8 +30,8 @@ import {
   Copy,
 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const STATUS_META = {
   verified: { label: "VÉRIFIÉ", color: "emerald", icon: CheckCircle2 },

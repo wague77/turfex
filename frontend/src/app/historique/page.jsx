@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -7,8 +7,8 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { APP_NAME } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const Historique = () => {
   const [items, setItems] = useState([]);

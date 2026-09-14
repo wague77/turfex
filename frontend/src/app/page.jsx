@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useRef, useState, useEffect } from "react";
 import axios from "axios";
@@ -37,8 +37,8 @@ import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 // Logo importé via public/ pour Next.js
 const LOGO_SRC = "/logo.svg";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 const NB_CLASSES = 20;
 const emptyCourse = () => ({ allocation: 0, valeur: 0, place: 0, partants: 0 });
 const emptyClasse = () => [emptyCourse(), emptyCourse(), emptyCourse()];

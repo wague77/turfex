@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * TurfxZonesPanel — Analyse VALUE en 3 zones (A/B/C).
@@ -28,8 +28,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const ZONE_META = {
   A: { label: "Zone A — Favoris", color: "from-emerald-500 to-cyan-500", desc: "Top tiers du marché PMU (cotes les plus basses)" },

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // PORTAGE FIDÈLE de src/pages/Index.tsx (TURFEX SOURCE)
 // Différences (forcées par la stack) :
@@ -12,8 +12,8 @@ import { HeroIntelligence } from "@/components/HeroIntelligence";
 import { DashboardIntelligence } from "@/components/DashboardIntelligence";
 import { scoreParticipants } from "@/lib/pronostics-source";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const DEFAULT_DATE = "25032025";
 

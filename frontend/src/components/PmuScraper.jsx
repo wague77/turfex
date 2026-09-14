@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import axios from "axios";
@@ -11,8 +11,8 @@ import { RefreshCw, Layers, Calendar } from "lucide-react";
 import { useSettings } from "@/contexts/SettingsContext";
 import { sendLocalNotification } from "@/lib/pwa";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const todayDDMMYYYY = () => {
   const d = new Date();

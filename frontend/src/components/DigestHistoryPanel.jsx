@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
@@ -23,8 +23,8 @@ import {
   ExternalLink,
 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const JOB_LABELS = {
   r1_pronostics: { label: "Pronostics R1 quotidiens", hourParis: "08h00", emoji: "🏁" },

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import axios from "axios";
@@ -17,8 +17,8 @@ import {
 import { toast } from "sonner";
 import { KeyRound, Eye, EyeOff, AlertTriangle, CheckCircle2 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 const ADMIN_KEY = "wague-pmu-admin-token";
 
 export const ChangePasswordDialog = ({ token, onPasswordChanged }) => {

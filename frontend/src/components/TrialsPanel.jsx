@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
@@ -22,8 +22,8 @@ import {
 import { Input } from "@/components/ui/input";
 import LiveSendStatus from "@/components/LiveSendStatus";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const trialStatus = (t, today) => {
   if (!t.active) return { label: "Désactivé", color: "bg-gray-300 text-gray-800", Icon: Ban };

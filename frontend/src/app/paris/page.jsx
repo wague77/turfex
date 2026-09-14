@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
@@ -10,8 +10,8 @@ import { ArrowLeft, Plus, Trash2, RefreshCw, Check, X, Wallet, TrendingUp, Trend
 import { toast } from "sonner";
 import { APP_NAME } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const PARI_TYPES = [
   { v: "SIMPLE_GAGNANT", l: "Simple Gagnant" },

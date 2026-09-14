@@ -1,12 +1,12 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { analyzeHorse, computeCourseDifficulty, computeStables } from "@/lib/analytics";
 import { Cloud, CloudRain, CloudSnow, Sun, Wind, Droplets, Thermometer, Users, Flag, AlertTriangle, Trophy } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const WeatherIcon = ({ code, size = "h-6 w-6" }) => {
   const c = Number(code) || 0;

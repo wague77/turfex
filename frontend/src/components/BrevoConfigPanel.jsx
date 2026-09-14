@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * BrevoConfigPanel — gestion clé Brevo + sender + test + provider switcher.
@@ -33,8 +33,8 @@ import {
   CreditCard,
 } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 export default function BrevoConfigPanel({ token }) {
   const [keyStatus, setKeyStatus] = useState(null);

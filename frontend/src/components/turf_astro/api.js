@@ -1,12 +1,11 @@
-
+﻿
 /**
  * TURF ASTRO — Helpers API + utilitaires.
  * Tous les endpoints sont préfixés `/api/astro/*` côté backend.
  */
 import axios from "axios";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-export const ASTRO_API = `${BACKEND_URL}/api/astro`;
+export const ASTRO_API = "/api/astro";
 
 export const fmtDate = (d) => {
   const dd = String(d.getDate()).padStart(2, "0");

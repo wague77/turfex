@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 /**
  * MaketouConfigPanel — admin UI pour configurer la passerelle de paiement Maketou.
@@ -19,8 +19,8 @@ import { Switch } from "@/components/ui/switch";
 import { toast } from "sonner";
 import { CreditCard, Save, Send, RefreshCw, Eye, EyeOff, ExternalLink, CheckCircle2, XCircle } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 const PLAN_LABELS = {
   "1m": { label: "1 mois", price: "30 €", optionLabel: "1 mois · 30 €" },

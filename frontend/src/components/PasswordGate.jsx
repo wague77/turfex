@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -13,8 +13,8 @@ import { MaketouSubscriptionWidget } from "@/components/MaketouSubscriptionWidge
 import { TrialSignup } from "@/components/TrialSignup";
 import { APP_NAME, APP_TAGLINE } from "@/lib/branding";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 const STORAGE_KEY = "wague-pmu-auth";
 
 const formatExpiry = (iso) => {

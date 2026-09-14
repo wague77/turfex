@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useState } from "react";
 import axios from "axios";
@@ -12,8 +12,8 @@ import {
 } from "@/components/ui/sheet";
 import { Brain, Loader2, Sparkles, Database, AlertTriangle } from "lucide-react";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || "https://turfex-backend-production.up.railway.app";
-const API = `${BACKEND_URL}/api`;
+// Proxy Next.js → Railway (voir next.config.js)
+const API = "/api";
 
 /**
  * Bouton qui déclenche une analyse IA (Claude Sonnet 4.5).
