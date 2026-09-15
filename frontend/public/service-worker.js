@@ -97,7 +97,7 @@ self.addEventListener("fetch", (event) => {
   event.respondWith(
     fetch(req)
       .then((res) => {
-        if (res.ok && res.type !== "opaque") {
+        if (res.ok && res.type !== "opaque" && !url.protocol.startsWith("chrome-extension")) {
           const clone = res.clone();
           caches.open(STATIC_CACHE).then((c) => c.put(req, clone));
         }

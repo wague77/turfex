@@ -20,7 +20,7 @@ CACHE_TTL_HOURS = 24
 
 # Modèle utilisé
 LLM_PROVIDER = "anthropic"
-LLM_MODEL = "claude-sonnet-4-5-20250929"
+LLM_MODEL = "claude-3-5-sonnet-latest"
 
 SYSTEM_PROMPT_HORSE = (
     "Tu es un tipster turf professionnel français spécialisé en pronostics PMU. "
@@ -162,26 +162,24 @@ async def analyze_horse(db, horse: Dict[str, Any], course_context: Dict[str, Any
         await _log_usage(db, "horse", cached=True)
         return {"ok": True, "analysis": cached, "cached": True}
 
-    api_key = os.environ.get("EMERGENT_LLM_KEY", "").strip()
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
-        await _log_usage(db, "horse", cached=False, error="missing_emergent_llm_key")
-        return {"ok": False, "error": "EMERGENT_LLM_KEY not configured"}
+        await _log_usage(db, "horse", cached=False, error="missing_anthropic_api_key")
+        return {"ok": False, "error": "ANTHROPIC_API_KEY not configured"}
 
     user_text = _build_horse_user_message(horse, course_context)
 
     try:
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
-        chat = (
-            LlmChat(
-                api_key=api_key,
-                session_id=f"horse-{key[:12]}",
-                system_message=SYSTEM_PROMPT_HORSE,
-            )
-            .with_model(LLM_PROVIDER, LLM_MODEL)
-            .with_params(max_budget=0.05, max_tokens=300)
+        from anthropic import AsyncAnthropic
+        client = AsyncAnthropic(api_key=api_key)
+        
+        response = await client.messages.create(
+            model=LLM_MODEL,
+            max_tokens=300,
+            system=SYSTEM_PROMPT_HORSE,
+            messages=[{"role": "user", "content": user_text}]
         )
-        response = await chat.send_message(UserMessage(text=user_text))
-        analysis = (response or "").strip()
+        analysis = response.content[0].text.strip() if response.content else ""
         if not analysis:
             await _log_usage(db, "horse", cached=False, error="empty_response")
             return {"ok": False, "error": "empty response from LLM"}
@@ -205,26 +203,24 @@ async def analyze_top8(db, top8: List[Dict[str, Any]], course_context: Dict[str,
         await _log_usage(db, "top8", cached=True)
         return {"ok": True, "analysis": cached, "cached": True}
 
-    api_key = os.environ.get("EMERGENT_LLM_KEY", "").strip()
+    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
     if not api_key:
-        await _log_usage(db, "top8", cached=False, error="missing_emergent_llm_key")
-        return {"ok": False, "error": "EMERGENT_LLM_KEY not configured"}
+        await _log_usage(db, "top8", cached=False, error="missing_anthropic_api_key")
+        return {"ok": False, "error": "ANTHROPIC_API_KEY not configured"}
 
     user_text = _build_top8_user_message(top8, course_context)
 
     try:
-        from emergentintegrations.llm.chat import LlmChat, UserMessage
-        chat = (
-            LlmChat(
-                api_key=api_key,
-                session_id=f"top8-{key[:12]}",
-                system_message=SYSTEM_PROMPT_TOP8,
-            )
-            .with_model(LLM_PROVIDER, LLM_MODEL)
-            .with_params(max_budget=0.10, max_tokens=500)
+        from anthropic import AsyncAnthropic
+        client = AsyncAnthropic(api_key=api_key)
+        
+        response = await client.messages.create(
+            model=LLM_MODEL,
+            max_tokens=500,
+            system=SYSTEM_PROMPT_TOP8,
+            messages=[{"role": "user", "content": user_text}]
         )
-        response = await chat.send_message(UserMessage(text=user_text))
-        analysis = (response or "").strip()
+        analysis = response.content[0].text.strip() if response.content else ""
         if not analysis:
             await _log_usage(db, "top8", cached=False, error="empty_response")
             return {"ok": False, "error": "empty response from LLM"}
