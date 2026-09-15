@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 import axios from "axios";
@@ -16,7 +16,7 @@ import { Brain, Loader2, Sparkles, Database, AlertTriangle } from "lucide-react"
 const API = "/api";
 
 /**
- * Bouton qui déclenche une analyse IA (Claude Sonnet 4.5).
+ * Bouton qui déclenche une analyse IA (Google Gemini 3.7 Flash).
  *
  * Props :
  *  - kind: "horse" | "top8"
@@ -87,7 +87,7 @@ export function AIAnalyzeButton({
               {kind === "top8" ? "Analyse IA — Top 8" : "Analyse IA — Cheval"}
             </SheetTitle>
             <SheetDescription className="text-xs">
-              Synthèse générée par Claude Sonnet 4.5 — précise, factuelle, en français.
+              Synthèse générée par Google Gemini 3.7 Flash — précise, factuelle, en français.
             </SheetDescription>
           </SheetHeader>
 

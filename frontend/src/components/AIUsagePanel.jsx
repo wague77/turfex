@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import axios from "axios";
@@ -86,7 +86,7 @@ export function AIUsagePanel({ token }) {
                 <Brain className="h-5 w-5" />
               </div>
               <div>
-                <div className="font-extrabold text-lg">Usage IA — Claude Sonnet 4.5</div>
+                <div className="font-extrabold text-lg">Usage IA — Google Gemini 3.7 Flash</div>
                 <div className="text-xs text-gray-600">
                   Analyse de chevaux & top 8 · cache 24h actif · budget controlé
                 </div>

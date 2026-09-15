@@ -464,7 +464,7 @@ const Admin = () => {
       {/* Historique envois digests + CRON externe */}
       <DigestHistoryPanel token={token} />
 
-      {/* Usage IA Claude Sonnet 4.5 */}
+      {/* Usage IA Google Gemini 3.7 Flash */}
       <AIUsagePanel token={token} />
 
       {/* Abonnés email — pronostics R1 quotidiens */}
