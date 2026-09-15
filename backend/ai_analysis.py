@@ -20,7 +20,7 @@ CACHE_TTL_HOURS = 24
 
 # Modèle utilisé
 LLM_PROVIDER = "google"
-LLM_MODEL = "gemini-3.5-flash"
+LLM_MODEL = "gemini-3.8-flash"
 
 SYSTEM_PROMPT_HORSE = (
     "Tu es un tipster turf professionnel français spécialisé en pronostics PMU. "
