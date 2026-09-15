@@ -1,5 +1,5 @@
 
-"""Module d'analyse IA des chevaux et top 8 via Gemini 1.5 Flash."""
+"""Module d'analyse IA des chevaux et top 8 via Gemini 3.5 Flash."""
 
 - Cache MongoDB (collection `ai_analysis_cache`) avec TTL 24h pour limiter coût LLM.
 - Logging usage quotidien dans `ai_usage_log` pour budget admin.
@@ -20,7 +20,7 @@ CACHE_TTL_HOURS = 24
 
 # Modèle utilisé
 LLM_PROVIDER = "google"
-LLM_MODEL = "gemini-1.5-flash"
+LLM_MODEL = "gemini-3.5-flash"
 
 SYSTEM_PROMPT_HORSE = (
     "Tu es un tipster turf professionnel français spécialisé en pronostics PMU. "
