@@ -19,8 +19,8 @@ logger = logging.getLogger(__name__)
 CACHE_TTL_HOURS = 24
 
 # Modèle utilisé
-LLM_PROVIDER = "anthropic"
-LLM_MODEL = "claude-3-5-sonnet-latest"
+LLM_PROVIDER = "google"
+LLM_MODEL = "gemini-3.7-flash"
 
 SYSTEM_PROMPT_HORSE = (
     "Tu es un tipster turf professionnel français spécialisé en pronostics PMU. "
@@ -162,24 +162,30 @@ async def analyze_horse(db, horse: Dict[str, Any], course_context: Dict[str, Any
         await _log_usage(db, "horse", cached=True)
         return {"ok": True, "analysis": cached, "cached": True}
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
-        await _log_usage(db, "horse", cached=False, error="missing_anthropic_api_key")
-        return {"ok": False, "error": "ANTHROPIC_API_KEY not configured"}
+        await _log_usage(db, "horse", cached=False, error="missing_gemini_api_key")
+        return {"ok": False, "error": "GEMINI_API_KEY not configured"}
 
     user_text = _build_horse_user_message(horse, course_context)
 
     try:
-        from anthropic import AsyncAnthropic
-        client = AsyncAnthropic(api_key=api_key)
+        from google import genai
+        import asyncio
+        client = genai.Client(api_key=api_key)
         
-        response = await client.messages.create(
-            model=LLM_MODEL,
-            max_tokens=300,
-            system=SYSTEM_PROMPT_HORSE,
-            messages=[{"role": "user", "content": user_text}]
-        )
-        analysis = response.content[0].text.strip() if response.content else ""
+        def _call():
+            return client.interactions.create(
+                model=LLM_MODEL,
+                input=user_text,
+                config={
+                    "system_instruction": SYSTEM_PROMPT_HORSE,
+                    "max_output_tokens": 300
+                }
+            )
+        
+        response = await asyncio.to_thread(_call)
+        analysis = (response.output_text or "").strip()
         if not analysis:
             await _log_usage(db, "horse", cached=False, error="empty_response")
             return {"ok": False, "error": "empty response from LLM"}
@@ -203,24 +209,30 @@ async def analyze_top8(db, top8: List[Dict[str, Any]], course_context: Dict[str,
         await _log_usage(db, "top8", cached=True)
         return {"ok": True, "analysis": cached, "cached": True}
 
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "").strip()
+    api_key = os.environ.get("GEMINI_API_KEY", "").strip()
     if not api_key:
-        await _log_usage(db, "top8", cached=False, error="missing_anthropic_api_key")
-        return {"ok": False, "error": "ANTHROPIC_API_KEY not configured"}
+        await _log_usage(db, "top8", cached=False, error="missing_gemini_api_key")
+        return {"ok": False, "error": "GEMINI_API_KEY not configured"}
 
     user_text = _build_top8_user_message(top8, course_context)
 
     try:
-        from anthropic import AsyncAnthropic
-        client = AsyncAnthropic(api_key=api_key)
+        from google import genai
+        import asyncio
+        client = genai.Client(api_key=api_key)
         
-        response = await client.messages.create(
-            model=LLM_MODEL,
-            max_tokens=500,
-            system=SYSTEM_PROMPT_TOP8,
-            messages=[{"role": "user", "content": user_text}]
-        )
-        analysis = response.content[0].text.strip() if response.content else ""
+        def _call():
+            return client.interactions.create(
+                model=LLM_MODEL,
+                input=user_text,
+                config={
+                    "system_instruction": SYSTEM_PROMPT_TOP8,
+                    "max_output_tokens": 500
+                }
+            )
+        
+        response = await asyncio.to_thread(_call)
+        analysis = (response.output_text or "").strip()
         if not analysis:
             await _log_usage(db, "top8", cached=False, error="empty_response")
             return {"ok": False, "error": "empty response from LLM"}
