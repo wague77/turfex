@@ -178,10 +178,8 @@ async def analyze_horse(db, horse: Dict[str, Any], course_context: Dict[str, Any
             return client.interactions.create(
                 model=LLM_MODEL,
                 input=user_text,
-                config={
-                    "system_instruction": SYSTEM_PROMPT_HORSE,
-                    "max_output_tokens": 300
-                }
+                system_instruction=SYSTEM_PROMPT_HORSE,
+                generation_config={"max_output_tokens": 300}
             )
         
         response = await asyncio.to_thread(_call)
@@ -225,10 +223,8 @@ async def analyze_top8(db, top8: List[Dict[str, Any]], course_context: Dict[str,
             return client.interactions.create(
                 model=LLM_MODEL,
                 input=user_text,
-                config={
-                    "system_instruction": SYSTEM_PROMPT_TOP8,
-                    "max_output_tokens": 500
-                }
+                system_instruction=SYSTEM_PROMPT_TOP8,
+                generation_config={"max_output_tokens": 500}
             )
         
         response = await asyncio.to_thread(_call)
