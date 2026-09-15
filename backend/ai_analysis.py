@@ -1,5 +1,5 @@
 
-"""Module d'analyse IA des chevaux et top 8 via Gemini 3.5 Flash."""
+"""Module d'analyse IA des chevaux et top 8 via Claude Sonnet 4.5.
 
 - Cache MongoDB (collection `ai_analysis_cache`) avec TTL 24h pour limiter coût LLM.
 - Logging usage quotidien dans `ai_usage_log` pour budget admin.
