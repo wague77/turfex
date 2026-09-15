@@ -179,7 +179,7 @@ async def analyze_horse(db, horse: Dict[str, Any], course_context: Dict[str, Any
                 model=LLM_MODEL,
                 input=user_text,
                 system_instruction=SYSTEM_PROMPT_HORSE,
-                generation_config={"max_output_tokens": 300}
+                generation_config={"max_output_tokens": 300, "thinking_level": "low"}
             )
         
         response = await asyncio.to_thread(_call)
@@ -224,7 +224,7 @@ async def analyze_top8(db, top8: List[Dict[str, Any]], course_context: Dict[str,
                 model=LLM_MODEL,
                 input=user_text,
                 system_instruction=SYSTEM_PROMPT_TOP8,
-                generation_config={"max_output_tokens": 500}
+                generation_config={"max_output_tokens": 500, "thinking_level": "low"}
             )
         
         response = await asyncio.to_thread(_call)
